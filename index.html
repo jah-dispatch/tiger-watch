@@ -346,12 +346,12 @@ my-tiger-watch-repo/
     const top5Movies = [
       {
         rank: 1,
-        title: "Dune: Part Two",
-        slug: "dune-part-two",
+        title: "The Devil Wears Prada 2",
+        slug: "devil-wears-prada-2",
         year: "2024",
-        category: "Sci-Fi",
+        category: "Drama",
         rating: "5.0",
-        cover: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&auto=format&fit=crop&q=80",
+        cover: "assets/images/covers/devil-wears-prada-2.png",
         synopsis: "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family."
       },
       {
@@ -603,31 +603,22 @@ my-tiger-watch-repo/
       window.location.hash = `/review/${slug}`;
     }
 
-    function handleHashRoute() {
-      const hash = window.location.hash || '#/';
-      const routeDisplay = document.getElementById('route-display');
-      const routeSpinner = document.getElementById('route-spinner');
-      const pane = document.getElementById('content-pane');
+    async function handleHashRoute() {
+  const hash = window.location.hash || '#/';
+  const pane = document.getElementById('content-pane');
 
-      routeSpinner.classList.remove('hidden');
-
-      if (hash.startsWith('#/review/')) {
-        const slug = hash.replace('#/review/', '').trim();
-        routeDisplay.innerText = `/reviews/${slug}.html`;
-
-        setTimeout(() => {
-          routeSpinner.classList.add('hidden');
-          renderReviewPage(pane, slug);
-          window.scrollTo({ top: pane.offsetTop - 100, behavior: 'smooth' });
-        }, 150);
-      } else {
-        routeDisplay.innerText = `/reviews/dune-part-two.html`;
-        setTimeout(() => {
-          routeSpinner.classList.add('hidden');
-          renderReviewPage(pane, 'dune-part-two');
-        }, 150);
-      }
+  if (hash.startsWith('#/review/')) {
+    const slug = hash.replace('#/review/', '').trim();
+    try {
+      const response = await fetch(`/reviews/${slug}.html`);
+      if (!response.ok) throw new Error("Review not found");
+      const html = await response.text();
+      pane.innerHTML = `<div class="page-fade-in">${html}</div>`;
+    } catch (err) {
+      pane.innerHTML = `<div class="p-8 text-center text-stone-400">Review file <code>reviews/${slug}.html</code> not found.</div>`;
     }
+  }
+}
 
     // RENDER STANDALONE REVIEW SNIPPET INTO CONTENT PANE
     function renderReviewPage(container, slug) {
