@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#121110]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tiger-Watch | Cozy Tiger Sandbox Movie Reviews</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            tiger: {
+              50: '#FFF7ED',
+              100: '#FCE1C6',
+              200: '#F9C28C',
+              400: '#FF9E00',
+              500: '#FF7A00',
+              600: '#E05E00',
+              800: '#873200',
+              bg: '#121110',
+              card: '#1A1816',
+              border: '#2A2520',
+              stripe: '#24201C'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Fredoka', 'Outfit', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* Custom Tiger Theme Scrollbar & Accents */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #121110;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #FF7A00;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #FF9E00;
+    }
+
+    /* Ambient Tiger Glow */
+    .tiger-glow {
+      box-shadow: 0 0 35px -5px rgba(255, 122, 0, 0.25);
+    }
+    .tiger-glow-sm {
+      box-shadow: 0 0 15px -3px rgba(255, 122, 0, 0.2);
+    }
+    .tiger-gradient-text {
+      background: linear-gradient(135deg, #FFF7ED 0%, #FF9E00 50%, #FF7A00 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Rank Number Gradient Outline */
+    .rank-number {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      -webkit-text-stroke: 2px #FF9E00;
+      color: transparent;
+      text-shadow: 0 0 20px rgba(255, 122, 0, 0.4);
+    }
+
+    /* Smooth Transitions */
+    .page-fade-in {
+      animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Glassmorphism */
+    .glass-panel {
+      background: rgba(26, 24, 22, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 122, 0, 0.15);
+    }
+    
+    /* Tiger Stripe Accent Line */
+    .tiger-stripe-border {
+      border-image: linear-gradient(to right, #FF7A00, #FF9E00, #2A2520) 1;
+    }
+  </style>
+</head>
+<body class="h-full bg-tiger-bg text-stone-200 antialiased font-sans flex flex-col min-h-screen selection:bg-tiger-500 selection:text-white">
+
+  <!-- TOP NAVBAR WITH DYNAMIC TYPE SEARCH -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-tiger-border shadow-2xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 gap-4">
+        
+        <!-- Logo -->
+        <a href="#/" class="flex items-center gap-3 group flex-shrink-0">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-tiger-500 to-tiger-600 flex items-center justify-center text-2xl shadow-lg border border-tiger-200/30 group-hover:rotate-12 group-hover:scale-105 transition-all duration-300 tiger-glow-sm">
+            🐯
+          </div>
+          <div>
+            <span class="font-display font-bold text-2xl tracking-wide tiger-gradient-text block leading-none">
+              TIGER-WATCH
+            </span>
+            <span class="text-[11px] font-semibold text-tiger-200 tracking-wider uppercase opacity-80 flex items-center gap-1.5 mt-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-tiger-400 animate-pulse"></span> Friendly Sandbox Reviews
+            </span>
+          </div>
+        </a>
+
+        <!-- Dynamic Search Input with Instant Dropdown -->
+        <div class="relative flex-1 max-w-lg mx-2 sm:mx-6">
+          <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-tiger-200/60 text-sm"></i>
+            <input 
+              type="text" 
+              id="header-search-input"
+              placeholder="Search by movie title or slug (e.g. Dune, Spider-Man)..." 
+              oninput="handleSearchInput(event)"
+              onfocus="showSearchResults()"
+              autocomplete="off"
+              class="w-full bg-[#121110]/90 border border-tiger-border focus:border-tiger-400 rounded-2xl pl-11 pr-10 py-2.5 text-xs sm:text-sm text-stone-100 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-tiger-500/30 transition-all shadow-inner"
+            />
+            <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-tiger-400 text-xs p-1">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <!-- Type-Ahead Search Results Overlay -->
+          <div 
+            id="search-results-dropdown" 
+            class="hidden absolute left-0 right-0 top-full mt-2 bg-tiger-card border border-tiger-400/30 rounded-2xl shadow-2xl overflow-hidden z-50 max-h-80 overflow-y-auto divide-y divide-tiger-border/50 glass-panel"
+          >
+            <!-- Search Results Populated Here -->
+          </div>
+        </div>
+
+        <!-- Right Action Buttons -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button 
+            onclick="openSetupModal()" 
+            class="hidden md:flex items-center gap-2 px-4 py-2 bg-tiger-card hover:bg-tiger-stripe text-tiger-100 border border-tiger-border hover:border-tiger-400/50 rounded-xl text-xs font-semibold transition-all shadow-sm group"
+          >
+            <i class="fa-solid fa-code text-tiger-400 group-hover:scale-110 transition-transform"></i>
+            <span>Repo Setup & Code</span>
+          </button>
+
+          <a 
+            href="#/" 
+            class="p-2.5 sm:px-4 sm:py-2 bg-gradient-to-r from-tiger-500 to-tiger-600 hover:from-tiger-400 hover:to-tiger-500 text-white rounded-xl text-xs font-bold transition-all shadow-lg tiger-glow-sm flex items-center gap-2"
+          >
+            <i class="fa-solid fa-paw"></i>
+            <span class="hidden sm:inline">All Reviews</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
+
+    <!-- TOP 5 MOVIE RATINGS CAROUSEL (NETFLIX / HULU STYLE) -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-xl bg-tiger-500/20 border border-tiger-500/40 flex items-center justify-center text-tiger-400 text-sm">
+            <i class="fa-solid fa-fire-flame-curved"></i>
+          </div>
+          <div>
+            <h2 class="font-display font-bold text-xl text-stone-100 flex items-center gap-2">
+              Top 5 Movie Ratings of All Time
+            </h2>
+            <p class="text-xs text-stone-400">Curated tiger sandbox hall-of-fame reviews</p>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-2 text-xs font-mono text-tiger-400 bg-tiger-card px-3 py-1.5 rounded-xl border border-tiger-border">
+          <i class="fa-solid fa-crown text-amber-400"></i>
+          <span>Live Rankings</span>
+        </div>
+      </div>
+
+      <!-- Scrollable Poster Ribbon -->
+      <div class="relative group">
+        <div 
+          id="top5-carousel" 
+          class="flex gap-4 sm:gap-6 overflow-x-auto pb-4 pt-2 snap-x snap-mandatory scroll-smooth no-scrollbar"
+        >
+          <!-- Dynamic Top 5 Poster Items Rendered Here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ROUTE PATH & SLUG INDICATOR -->
+    <div class="flex items-center justify-between bg-tiger-card/90 px-4 py-2.5 rounded-2xl border border-tiger-border text-xs font-mono">
+      <div class="flex items-center gap-2 overflow-x-auto">
+        <span class="text-tiger-400 font-bold flex items-center gap-1.5">
+          <i class="fa-solid fa-compass text-tiger-500"></i> Injector Route:
+        </span>
+        <span id="route-display" class="bg-tiger-bg px-3 py-1 rounded-xl text-emerald-400 border border-tiger-border font-semibold">
+          /reviews/dune-part-two.html
+        </span>
+        <span id="route-spinner" class="hidden text-tiger-400 animate-spin ml-2">
+          <i class="fa-solid fa-circle-notch"></i>
+        </span>
+      </div>
+
+      <div class="hidden sm:flex items-center gap-3 text-stone-400 text-[11px]">
+        <span><i class="fa-solid fa-bolt text-tiger-400"></i> Standalone Content Pane</span>
+      </div>
+    </div>
+
+    <!-- DYNAMIC REVIEW CONTENT INJECTION PANE -->
+    <section 
+      id="content-pane" 
+      class="bg-tiger-card/60 rounded-3xl border-2 border-tiger-border/80 p-4 sm:p-8 min-h-[520px] transition-all duration-300 tiger-glow-sm relative overflow-hidden"
+    >
+      <!-- Review snippet loaded here via Hash Router -->
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#0A0908] border-t border-tiger-border py-8 text-xs text-stone-500 mt-12">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">🐯</span>
+        <div>
+          <p class="font-bold text-stone-300">Tiger-Watch Movie Reviews</p>
+          <p class="text-[11px] text-stone-500">Cozy title-slug injection architecture.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button onclick="openSetupModal()" class="hover:text-tiger-400 transition-colors">
+          <i class="fa-solid fa-folder-tree mr-1"></i> Repo Structure Guide
+        </button>
+        <a href="#/" class="hover:text-tiger-400 transition-colors">Back to Top</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- REPO SETUP & SOURCE CODE DRAWER / MODAL -->
+  <div id="setup-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-tiger-card border-2 border-tiger-500/40 rounded-3xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden page-fade-in">
+      
+      <!-- Modal Header -->
+      <div class="p-5 border-b border-tiger-border flex items-center justify-between bg-tiger-bg">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-tiger-500/20 text-tiger-400 flex items-center justify-center text-lg border border-tiger-500/30">
+            <i class="fa-solid fa-code"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-lg text-stone-100">Tiger-Watch Repo Setup Guide</h3>
+            <p class="text-xs text-stone-400">How to store and dynamically load reviews in your own GitHub repository</p>
+          </div>
+        </div>
+        <button onclick="closeSetupModal()" class="text-stone-400 hover:text-white p-2 rounded-xl text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Modal Content Body -->
+      <div class="p-6 overflow-y-auto space-y-6 text-xs text-stone-300 font-mono">
+        
+        <!-- Folder Tree Blueprint -->
+        <div class="space-y-2">
+          <h4 class="text-tiger-400 font-bold uppercase tracking-wider text-[11px] font-sans flex items-center gap-2">
+            <i class="fa-solid fa-folder-tree"></i> Required Repository Folder Structure
+          </h4>
+          <pre class="bg-tiger-bg p-4 rounded-2xl border border-tiger-border text-emerald-400 leading-relaxed overflow-x-auto">
+my-tiger-watch-repo/
+├── index.html                 <-- Main shell layout (this viewer)
+├── css/
+│   └── styles.css             <-- Cozy tiger dark theme stylesheet
+├── js/
+│   └── app.js                 <-- Slug fetch & hash router logic
+├── assets/
+│   └── images/
+│       └── covers/            <-- Movie poster files (.jpg / .webp)
+│           ├── dune-part-two.jpg
+│           ├── spiderman-across-the-spider-verse.jpg
+│           └── oppenheimer.jpg
+└── reviews/                   <-- Standalone review snippet files
+    ├── dune-part-two.html
+    ├── spiderman-across-the-spider-verse.html
+    └── oppenheimer.html</pre>
+        </div>
+
+        <!-- Sample Snippet Template -->
+        <div class="space-y-2">
+          <h4 class="text-tiger-400 font-bold uppercase tracking-wider text-[11px] font-sans flex items-center gap-2">
+            <i class="fa-solid fa-file-code"></i> Standalone Review Template (<code class="lowercase">reviews/slug.html</code>)
+          </h4>
+          <pre class="bg-tiger-bg p-4 rounded-2xl border border-tiger-border text-amber-200/90 leading-relaxed overflow-x-auto text-[11px]">
+&lt;!-- Saved at: reviews/dune-part-two.html --&gt;
+&lt;article class="space-y-6"&gt;
+  &lt;div class="flex flex-col md:flex-row gap-6 items-start"&gt;
+    &lt;img src="/assets/images/covers/dune-part-two.jpg" class="w-48 rounded-2xl border border-tiger-400/30 shadow-xl" /&gt;
+    &lt;div class="space-y-3 flex-1"&gt;
+      &lt;span class="px-3 py-1 bg-tiger-500/20 text-tiger-400 rounded-full text-xs font-bold"&gt;Sci-Fi&lt;/span&gt;
+      &lt;h1 class="text-3xl font-extrabold text-white"&gt;Dune: Part Two&lt;/h1&gt;
+      &lt;div class="text-tiger-400 font-bold text-lg"&gt;🐯 5.0 / 5 Rating&lt;/div&gt;
+      &lt;p class="text-stone-300 text-sm leading-relaxed"&gt;
+        Denis Villeneuve delivers a breathtaking cinematic milestone...
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/article&gt;</pre>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-tiger-border bg-tiger-bg flex justify-end">
+        <button onclick="closeSetupModal()" class="px-5 py-2 bg-tiger-500 hover:bg-tiger-600 text-white rounded-xl text-xs font-bold shadow-md">
+          Got It!
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <script>
+    // TOP 5 REVIEWS DATABASE
+    const top5Movies = [
+      {
+        rank: 1,
+        title: "Dune: Part Two",
+        slug: "dune-part-two",
+        year: "2024",
+        category: "Sci-Fi",
+        rating: "5.0",
+        cover: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&auto=format&fit=crop&q=80",
+        synopsis: "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family."
+      },
+      {
+        rank: 2,
+        title: "Spider-Man: Across the Spider-Verse",
+        slug: "spiderman-across-the-spider-verse",
+        year: "2023",
+        category: "Animation",
+        rating: "4.9",
+        cover: "https://images.unsplash.com/photo-1635805737707-575885ab0820?w=800&auto=format&fit=crop&q=80",
+        synopsis: "Miles Morales catapults across the Multiverse, where he encounters a team of Spider-People charged with protecting its existence."
+      },
+      {
+        rank: 3,
+        title: "Oppenheimer",
+        slug: "oppenheimer",
+        year: "2023",
+        category: "Drama",
+        rating: "4.9",
+        cover: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=800&auto=format&fit=crop&q=80",
+        synopsis: "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb."
+      },
+      {
+        rank: 4,
+        title: "Spirited Away",
+        slug: "spirited-away",
+        year: "2001",
+        category: "Anime",
+        rating: "4.8",
+        cover: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop&q=80",
+        synopsis: "A ten-year-old girl wanders into a world ruled by gods, witches and spirits, where humans are changed into beasts."
+      },
+      {
+        rank: 5,
+        title: "Paddington 2",
+        slug: "paddington-2",
+        year: "2017",
+        category: "Family",
+        rating: "4.8",
+        cover: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=800&auto=format&fit=crop&q=80",
+        synopsis: "Paddington gets framed for stealing a pop-up book and embarks on a joyful journey to uncover the real thief."
+      }
+    ];
+
+    // ALL EXTENDED REVIEWS FOR SEARCH & ROUTING
+    const reviewSnippets = {
+      "dune-part-two": {
+        title: "Dune: Part Two",
+        slug: "dune-part-two",
+        rating: "5.0",
+        year: "2024",
+        category: "Sci-Fi",
+        director: "Denis Villeneuve",
+        runtime: "2 hr 46 min",
+        cover: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1000&auto=format&fit=crop&q=80",
+        content: `
+          <p class="text-stone-300 text-sm sm:text-base leading-relaxed">
+            <strong class="text-tiger-400">Dune: Part Two</strong> is a towering masterpiece of modern science fiction cinema. Denis Villeneuve crafts a sweeping, visually overwhelming journey that honors Frank Herbert's epic scale while delivering visceral emotional depth.
+          </p>
+          <p class="text-stone-300 text-sm sm:text-base leading-relaxed mt-4">
+            Greig Fraser's cinematography renders Arrakis in terrifying, sun-bleached glory, complemented by Hans Zimmer's thunderous, otherworldly soundtrack. Timothée Chalamet and Zendaya give career-defining performances as fate and fanaticism collide.
+          </p>
+        `,
+        highlights: ["Jaw-dropping desert scale", "Thunderous audio design", "Masterclass direction"]
+      },
+      "spiderman-across-the-spider-verse": {
+        title: "Spider-Man: Across the Spider-Verse",
+        slug: "spiderman-across-the-spider-verse",
+        rating: "4.9",
+        year: "2023",
+        category: "Animation",
+        director: "Joaquim Dos Santos, Kemp Powers",
+        runtime: "2 hr 20 min",
+        cover: "https://images.unsplash.com/photo-1635805737707-575885ab0820?w=1000&auto=format&fit=crop&q=80",
+        content: `
+          <p class="text-stone-300 text-sm sm:text-base leading-relaxed">
+            Every frame of <strong class="text-tiger-400">Across the Spider-Verse</strong> feels like a living museum exhibit of comic book art styles. The film pushes animation boundaries further than any release of the decade.
+          </p>
+          <p class="text-stone-300 text-sm sm:text-base leading-relaxed mt-4">
+            Miles Morales' emotional core anchors a breathtaking multiverse story filled with inventive action, groundbreaking pacing, and an infectious musical soundtrack.
+          </p>
+        `,
+        highlights: ["Revolutionary animation styles", "Emotional storyline", "Incredible soundtrack"]
+      },
+      "oppenheimer": {
+        title: "Oppenheimer",
+        slug: "oppenheimer",
+        rating: "4.9",
+        year: "2023",
+        category: "Drama",
+        director: "Christopher Nolan",
+        runtime: "3 hr 00 min",
+        cover: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=1000&auto=format&fit=crop&q=80",
+        content: `
+          <p class="text-stone-300 text-sm sm:text-base leading-relaxed">
+            Christopher Nolan's <strong class="text-tiger-400">Oppenheimer</strong> is a relentless biological and political thriller that grips you for three full hours. Cillian Murphy delivers a haunting, subtle performance as the father of the atomic bomb.
+          </p>
+          <p class="text-stone-300 text-sm sm:text-base leading-relaxed mt-4">
+            Ludwig Göransson's musical score acts as the film's beating heart, building tension to an explosive, quiet crescendo.
+          </p>
+        `,
+        highlights: ["Cillian Murphy career performance", "Intense musical score", "Masterful editing"]
+      },
+      "spirited-away": {
+        title: "Spirited Away",
+        slug: "spirited-away",
+        rating: "4.8",
+        year: "2001",
+        category: "Anime",
+        director: "Hayao Miyazaki",
+        runtime: "2 hr 05 min",
+        cover: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1000&auto=format&fit=crop&q=80",
+        content: `
+          <p class="text-stone-300 text-sm sm:text-base leading-relaxed">
+            Hayao Miyazaki's <strong class="text-tiger-400">Spirited Away</strong> remains an unmatched masterpiece of hand-drawn animated wonder. Chihiro's journey through the spirit bathhouse is rich with Japanese mythology, cozy magic, and timeless warmth.
+          </p>
+        `,
+        highlights: ["Timeless hand-drawn animation", "Joe Hisaishi iconic score", "Cozy spirit world"]
+      },
+      "paddington-2": {
+        title: "Paddington 2",
+        slug: "paddington-2",
+        rating: "4.8",
+        year: "2017",
+        category: "Family",
+        director: "Paul King",
+        runtime: "1 hr 43 min",
+        cover: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1000&auto=format&fit=crop&q=80",
+        content: `
+          <p class="text-stone-300 text-sm sm:text-base leading-relaxed">
+            <strong class="text-tiger-400">Paddington 2</strong> is pure, unadulterated cinematic joy. Hugh Grant steals every scene as Phoenix Buchanan in a heartwarming tale about kindness, community, and marmalade sandwiches.
+          </p>
+        `,
+        highlights: ["Pure wholesome humor", "Hugh Grant's hilarious villain", "Delightful visuals"]
+      }
+    };
+
+    // RENDER TOP 5 CAROUSEL
+    function renderTop5Carousel() {
+      const carousel = document.getElementById('top5-carousel');
+      carousel.innerHTML = top5Movies.map(m => `
+        <div 
+          onclick="navigateToSlug('${m.slug}')"
+          class="snap-start flex-shrink-0 w-44 sm:w-52 bg-tiger-card rounded-2xl overflow-hidden border border-tiger-border hover:border-tiger-400/80 transition-all duration-300 cursor-pointer group hover:-translate-y-1.5 shadow-xl relative"
+        >
+          <!-- Rank Badge -->
+          <div class="absolute top-2 left-2 z-20 rank-number text-4xl sm:text-5xl leading-none drop-shadow-md">
+            ${m.rank}
+          </div>
+
+          <!-- Cover Image Container -->
+          <div class="relative h-60 sm:h-64 bg-tiger-bg overflow-hidden">
+            <img src="${m.cover}" alt="${m.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100" />
+            <div class="absolute inset-0 bg-gradient-to-t from-tiger-card via-transparent to-black/40"></div>
+            
+            <div class="absolute bottom-2 right-2 bg-tiger-bg/90 backdrop-blur-md px-2 py-0.5 rounded-lg border border-tiger-400/30 text-tiger-400 text-[11px] font-bold flex items-center gap-1">
+              <span>🐯</span> ${m.rating}
+            </div>
+          </div>
+
+          <!-- Card Info -->
+          <div class="p-3 space-y-1">
+            <div class="text-[10px] text-tiger-400 font-mono font-semibold uppercase tracking-wider">${m.category} • ${m.year}</div>
+            <h3 class="font-bold text-xs sm:text-sm text-stone-100 group-hover:text-tiger-400 transition-colors line-clamp-1">${m.title}</h3>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // SEARCH INPUT TYPE-AHEAD HANDLER
+    function handleSearchInput(e) {
+      const query = e.target.value.toLowerCase().trim();
+      const dropdown = document.getElementById('search-results-dropdown');
+      const clearBtn = document.getElementById('clear-search-btn');
+
+      if (query.length > 0) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+        dropdown.classList.add('hidden');
+        return;
+      }
+
+      const matches = Object.values(reviewSnippets).filter(item => 
+        item.title.toLowerCase().includes(query) || 
+        item.slug.toLowerCase().includes(query) ||
+        item.category.toLowerCase().includes(query)
+      );
+
+      if (matches.length === 0) {
+        dropdown.innerHTML = `
+          <div class="p-4 text-center text-xs text-stone-400">
+            No movie reviews found matching "<span class="text-tiger-400">${query}</span>"
+          </div>
+        `;
+      } else {
+        dropdown.innerHTML = matches.map(m => `
+          <div 
+            onclick="selectSearchResult('${m.slug}')"
+            class="p-3 hover:bg-tiger-stripe cursor-pointer flex items-center justify-between gap-3 transition-colors"
+          >
+            <div class="flex items-center gap-3">
+              <img src="${m.cover}" class="w-10 h-10 rounded-lg object-cover border border-tiger-border" />
+              <div>
+                <div class="font-bold text-xs text-stone-100">${m.title}</div>
+                <div class="text-[10px] text-stone-400 font-mono">/reviews/${m.slug}.html</div>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-tiger-400 bg-tiger-bg px-2 py-1 rounded-lg border border-tiger-border">
+              🐯 ${m.rating}
+            </span>
+          </div>
+        `).join('');
+      }
+
+      dropdown.classList.remove('hidden');
+    }
+
+    function showSearchResults() {
+      const input = document.getElementById('header-search-input');
+      if (input.value.trim().length > 0) {
+        document.getElementById('search-results-dropdown').classList.remove('hidden');
+      }
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('header-search-input');
+      input.value = '';
+      document.getElementById('clear-search-btn').classList.add('hidden');
+      document.getElementById('search-results-dropdown').classList.add('hidden');
+    }
+
+    function selectSearchResult(slug) {
+      clearSearch();
+      navigateToSlug(slug);
+    }
+
+    // Close search dropdown on click outside
+    document.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('search-results-dropdown');
+      const input = document.getElementById('header-search-input');
+      if (!dropdown.contains(e.target) && e.target !== input) {
+        dropdown.classList.add('hidden');
+      }
+    });
+
+    // ROUTER & CONTENT PANE INJECTION
+    function navigateToSlug(slug) {
+      window.location.hash = `/review/${slug}`;
+    }
+
+    function handleHashRoute() {
+      const hash = window.location.hash || '#/';
+      const routeDisplay = document.getElementById('route-display');
+      const routeSpinner = document.getElementById('route-spinner');
+      const pane = document.getElementById('content-pane');
+
+      routeSpinner.classList.remove('hidden');
+
+      if (hash.startsWith('#/review/')) {
+        const slug = hash.replace('#/review/', '').trim();
+        routeDisplay.innerText = `/reviews/${slug}.html`;
+
+        setTimeout(() => {
+          routeSpinner.classList.add('hidden');
+          renderReviewPage(pane, slug);
+          window.scrollTo({ top: pane.offsetTop - 100, behavior: 'smooth' });
+        }, 150);
+      } else {
+        routeDisplay.innerText = `/reviews/dune-part-two.html`;
+        setTimeout(() => {
+          routeSpinner.classList.add('hidden');
+          renderReviewPage(pane, 'dune-part-two');
+        }, 150);
+      }
+    }
+
+    // RENDER STANDALONE REVIEW SNIPPET INTO CONTENT PANE
+    function renderReviewPage(container, slug) {
+      const review = reviewSnippets[slug];
+
+      if (!review) {
+        container.innerHTML = `
+          <div class="page-fade-in p-8 text-center space-y-4 max-w-md mx-auto my-12">
+            <div class="w-16 h-16 rounded-3xl bg-tiger-500/20 text-tiger-400 text-3xl flex items-center justify-center mx-auto border border-tiger-400/30">
+              🐯
+            </div>
+            <h2 class="text-xl font-bold text-stone-100">Review Snippet Not Found</h2>
+            <p class="text-xs text-stone-400">No HTML snippet found at <code class="text-tiger-400 font-mono">reviews/${slug}.html</code></p>
+            <a href="#/" class="inline-block px-4 py-2 bg-tiger-500 text-white rounded-xl text-xs font-bold shadow-md">
+              Return to Featured Reviews
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <article class="page-fade-in space-y-8">
+          
+          <!-- Hero Header Inside Pane -->
+          <div class="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
+            <div class="relative w-full lg:w-64 h-80 lg:h-96 rounded-2xl overflow-hidden border-2 border-tiger-400/30 shadow-2xl flex-shrink-0 group">
+              <img src="${review.cover}" alt="${review.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <div class="absolute bottom-3 left-3 right-3 flex justify-between items-center text-xs font-bold text-white">
+                <span class="bg-tiger-500 px-2.5 py-1 rounded-lg uppercase">${review.category}</span>
+                <span class="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/20">${review.year}</span>
+              </div>
+            </div>
+
+            <div class="space-y-4 flex-1">
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-1 bg-tiger-500/20 text-tiger-400 border border-tiger-500/30 rounded-xl text-xs font-bold font-mono">
+                  reviews/${review.slug}.html
+                </span>
+              </div>
+
+              <h1 class="font-display font-extrabold text-3xl sm:text-4xl text-stone-100 tracking-tight leading-tight">
+                ${review.title}
+              </h1>
+
+              <!-- Tiger Rating Pill -->
+              <div class="flex flex-wrap items-center gap-4 pt-1">
+                <div class="bg-tiger-bg border border-tiger-400/40 px-4 py-2 rounded-2xl flex items-center gap-3 tiger-glow-sm">
+                  <span class="text-2xl">🐯</span>
+                  <div>
+                    <div class="text-lg font-extrabold text-tiger-400 leading-none">${review.rating} / 5.0</div>
+                    <div class="text-[10px] text-stone-400 uppercase font-semibold">Tiger Paw Score</div>
+                  </div>
+                </div>
+
+                <div class="text-xs text-stone-400 space-y-0.5">
+                  <div><strong>Director:</strong> ${review.director || 'N/A'}</div>
+                  <div><strong>Runtime:</strong> ${review.runtime || 'N/A'}</div>
+                </div>
+              </div>
+
+              <!-- Main Review Content Paragraphs -->
+              <div class="pt-4 border-t border-tiger-border space-y-4">
+                ${review.content}
+              </div>
+
+              <!-- Highlights -->
+              <div class="pt-4 border-t border-tiger-border space-y-2">
+                <h4 class="text-xs font-bold text-stone-400 uppercase tracking-wider">Top Highlights</h4>
+                <div class="flex flex-wrap gap-2">
+                  ${(review.highlights || []).map(h => `
+                    <span class="bg-emerald-950/60 text-emerald-300 border border-emerald-800/50 px-3 py-1 rounded-xl text-xs font-medium flex items-center gap-1.5">
+                      <i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> ${h}
+                    </span>
+                  `).join('')}
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </article>
+      `;
+    }
+
+    // MODAL SETUP GUIDE LOGIC
+    function openSetupModal() {
+      document.getElementById('setup-modal').classList.remove('hidden');
+    }
+
+    function closeSetupModal() {
+      document.getElementById('setup-modal').classList.add('hidden');
+    }
+
+    // INIT APP
+    window.addEventListener('DOMContentLoaded', () => {
+      renderTop5Carousel();
+      handleHashRoute();
+    });
+    window.addEventListener('hashchange', handleHashRoute);
+  </script>
+</body>
+</html>
