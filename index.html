@@ -320,6 +320,75 @@
   content: "• ";
   color: #a8a29e;
 }
+/* ==========================================
+   RATING CARD STYLES (High vs Low)
+   ========================================== */
+
+.rating-card {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 12px 18px;
+  border-radius: 16px;
+  margin-top: 0.5rem;
+  width: fit-content;
+}
+
+.score-number {
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+.score-max {
+  font-size: 0.85rem;
+  color: #a8a29e;
+}
+
+.stars {
+  font-size: 0.9rem;
+  display: flex;
+  gap: 2px;
+}
+
+.rating-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* --- Low Rating Theme (< 3.0) : Red --- */
+.rating-low {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.rating-low .score-number,
+.rating-low .stars,
+.rating-low .rating-label {
+  color: #ef4444; /* Red */
+}
+
+/* --- High Rating Theme (>= 3.0) : Green --- */
+.rating-high {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.rating-high .score-number,
+.rating-high .stars,
+.rating-high .rating-label {
+  color: #10b981; /* Green */
+}
+
+/* --- Medium Rating Theme (Optional) : Blue --- */
+.rating-med {
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+.rating-med .score-number,
+.rating-med .stars,
+.rating-med .rating-label {
+  color: #3b82f6; /* Blue */
+}
   </style>
 </head>
 <body class="h-full bg-tiger-bg text-stone-200 antialiased font-sans flex flex-col min-h-screen selection:bg-tiger-500 selection:text-white">
