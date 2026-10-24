@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TigerFuel - Dominate Your Fitness</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tiger: {
+                            bg: '#0D0D0E',
+                            card: '#161619',
+                            border: '#2A2A30',
+                            orange: '#FF6B00',
+                            amber: '#FF9E00',
+                            darkOrange: '#CC5200',
+                            jungle: '#12261E',
+                            accentGreen: '#10B981',
+                            silver: '#E2E8F0',
+                            gold: '#F59E0B'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styling and Animated Tiger Patterns */
+        body {
+            background-color: #0D0D0E;
+            color: #F3F4F6;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Dynamic Tiger Stripe Pattern Background Overlay */
+        .tiger-stripes-bg {
+            background-color: #0d0d0e;
+            background-image: radial-gradient(rgba(255, 107, 0, 0.08) 1px, transparent 0),
+                              radial-gradient(rgba(255, 107, 0, 0.05) 1px, #0d0d0e 1px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #161619;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF6B00;
+            border-radius: 9999px;
+        }
+
+        /* Dynamic Theme Palette Override CSS Variables */
+        :root {
+            --primary: #FF6B00;
+            --primary-hover: #E05D00;
+            --primary-glow: rgba(255, 107, 0, 0.35);
+            --stripe-color: rgba(255, 107, 0, 0.15);
+        }
+
+        .theme-white-tiger {
+            --primary: #CBD5E1;
+            --primary-hover: #94A3B8;
+            --primary-glow: rgba(203, 213, 225, 0.35);
+            --stripe-color: rgba(203, 213, 225, 0.15);
+        }
+
+        .theme-golden-tabby {
+            --primary: #F59E0B;
+            --primary-hover: #D97706;
+            --primary-glow: rgba(245, 158, 11, 0.35);
+            --stripe-color: rgba(245, 158, 11, 0.15);
+        }
+
+        .theme-shadow-panther {
+            --primary: #8B5CF6;
+            --primary-hover: #7C3AED;
+            --primary-glow: rgba(139, 92, 246, 0.35);
+            --stripe-color: rgba(139, 92, 246, 0.15);
+        }
+
+        .theme-colored-text {
+            color: var(--primary);
+        }
+        .theme-bg-color {
+            background-color: var(--primary);
+        }
+        .theme-border-color {
+            border-color: var(--primary);
+        }
+        .theme-glow {
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        /* Pulsing & Animated Mascot Styling */
+        @keyframes roarPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .animate-roar {
+            animation: roarPulse 0.4s ease-in-out infinite;
+        }
+
+        /* Smooth Progress Circular Rings */
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(22, 22, 25, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 107, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="h-full min-h-screen tiger-stripes-bg flex flex-col justify-between selection:bg-orange-500 selection:text-white">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-40 glass-card border-b border-tiger-border px-4 py-3 lg:px-8">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="triggerMascotRoar()">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-orange-500 flex items-center justify-center text-xl text-black font-extrabold shadow-lg shadow-orange-500/20">
+                    <i class="fa-solid fa-paw"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-black font-display tracking-wider flex items-center gap-1.5">
+                        TIGER<span class="theme-colored-text">FUEL</span>
+                        <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/30">PRO</span>
+                    </h1>
+                    <p class="text-xs text-gray-400 font-medium">Unleash Your Inner Apex Predator</p>
+                </div>
+            </div>
+
+            <!-- Global Stats Bar (Quick Glance) -->
+            <div class="hidden md:flex items-center gap-6 text-sm">
+                <div class="flex items-center gap-2 bg-tiger-bg px-3 py-1.5 rounded-lg border border-tiger-border">
+                    <i class="fa-solid fa-fire text-orange-500"></i>
+                    <span class="text-gray-400">Stalker Streak:</span>
+                    <span id="headerStreakVal" class="font-bold text-white">7 Days 🔥</span>
+                </div>
+                <div class="flex items-center gap-2 bg-tiger-bg px-3 py-1.5 rounded-lg border border-tiger-border">
+                    <i class="fa-solid fa-trophy text-amber-400"></i>
+                    <span class="text-gray-400">Hunting XP:</span>
+                    <span id="headerXPVal" class="font-bold text-amber-400">1,420 XP</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-3">
+                <button onclick="toggleTweakPanel()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-tiger-card hover:bg-tiger-border text-xs font-semibold text-gray-200 transition border border-tiger-border hover:border-orange-500/50">
+                    <i class="fa-solid fa-sliders text-orange-500"></i>
+                    <span class="hidden sm:inline">Feature Tweaker & Code</span>
+                </button>
+                <button onclick="quickAddWater()" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 text-xs font-semibold transition border border-blue-500/30">
+                    <i class="fa-solid fa-droplet"></i>
+                    <span class="hidden sm:inline">+ Hydrate</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard Body -->
+    <main class="max-w-7xl w-full mx-auto p-4 md:p-6 lg:p-8 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- LEFT COLUMN: Tiger Mascot & Energy Gauge (3 Cols) -->
+        <section class="lg:col-span-4 flex flex-col gap-6">
+            
+            <!-- Dynamic Mascot Card -->
+            <div class="glass-card rounded-2xl p-6 relative overflow-hidden flex flex-col items-center text-center group">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-orange-500/10 rounded-full blur-2xl group-hover:bg-orange-500/20 transition"></div>
+                
+                <!-- Mascot Level Badge -->
+                <div class="w-full flex justify-between items-center mb-4 text-xs">
+                    <span class="px-2.5 py-1 rounded-full bg-tiger-bg border border-tiger-border text-gray-300 font-mono">
+                        <i class="fa-solid fa-shield-cat text-orange-400 mr-1"></i> <span id="mascotRankTitle">Royal Bengal</span>
+                    </span>
+                    <span class="text-orange-400 font-bold" id="mascotLevelText">LVL 5</span>
+                </div>
+
+                <!-- Avatar Display Box -->
+                <div id="mascotAvatarContainer" onclick="triggerMascotRoar()" class="relative my-3 cursor-pointer select-none transition transform hover:scale-105 active:scale-95">
+                    <!-- Tiger SVG Graphic Container -->
+                    <div id="tigerSvgBox" class="w-44 h-44 rounded-full bg-gradient-to-b from-orange-500/20 to-tiger-card border-4 border-orange-500/40 p-3 flex items-center justify-center relative shadow-2xl">
+                        <!-- Dynamic SVG Tiger Mascot Face -->
+                        <svg id="tigerSvg" viewBox="0 0 200 200" class="w-full h-full drop-shadow-lg">
+                            <!-- Ears -->
+                            <polygon points="35,50 65,20 75,65" fill="#FF6B00" stroke="#111" stroke-width="4"/>
+                            <polygon points="42,50 60,30 68,60" fill="#222" />
+                            <polygon points="165,50 135,20 125,65" fill="#FF6B00" stroke="#111" stroke-width="4"/>
+                            <polygon points="158,50 140,30 132,60" fill="#222" />
+
+                            <!-- Head Shape -->
+                            <path d="M 40 90 Q 30 150 100 175 Q 170 150 160 90 Q 150 40 100 40 Q 50 40 40 90 Z" fill="#FF6B00" stroke="#111" stroke-width="5"/>
+
+                            <!-- Tiger Stripes (Head) -->
+                            <polygon points="100,42 95,65 105,65" fill="#111" />
+                            <polygon points="80,48 82,66 90,60" fill="#111" />
+                            <polygon points="120,48 118,66 110,60" fill="#111" />
+                            <path d="M 45,95 Q 65,100 52,110 Z" fill="#111" />
+                            <path d="M 155,95 Q 135,100 148,110 Z" fill="#111" />
+
+                            <!-- Muzzle / Snout -->
+                            <ellipse cx="100" cy="130" rx="35" ry="25" fill="#FFF" stroke="#111" stroke-width="3"/>
+
+                            <!-- Eyes (Dynamic State) -->
+                            <g id="tigerEyes">
+                                <ellipse cx="70" cy="90" rx="12" ry="10" fill="#FFD700" stroke="#111" stroke-width="3" />
+                                <circle id="leftPupil" cx="70" cy="90" r="5" fill="#111" />
+                                <ellipse cx="130" cy="90" rx="12" ry="10" fill="#FFD700" stroke="#111" stroke-width="3" />
+                                <circle id="rightPupil" cx="130" cy="90" r="5" fill="#111" />
+                            </g>
+
+                            <!-- Nose -->
+                            <polygon points="92,118 108,118 100,128" fill="#FF8888" stroke="#111" stroke-width="2"/>
+
+                            <!-- Mouth / Fangs (Dynamic State) -->
+                            <path id="tigerMouth" d="M 85 138 Q 100 148 115 138" stroke="#111" stroke-width="4" fill="none" stroke-linecap="round"/>
+                            <!-- Fangs -->
+                            <polygon id="leftFang" points="88,138 92,148 95,138" fill="#FFF" stroke="#111" stroke-width="1"/>
+                            <polygon id="rightFang" points="105,138 108,148 112,138" fill="#FFF" stroke="#111" stroke-width="1"/>
+                        </svg>
+
+                        <!-- Dynamic Accessory Slot -->
+                        <div id="mascotAccessorySlot" class="absolute -top-2 left-1/2 transform -translate-x-1/2 text-3xl">
+                            👑
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mascot Mood Bubble -->
+                <div class="mt-2 bg-tiger-bg/90 px-4 py-1.5 rounded-full border border-tiger-border text-xs font-semibold text-orange-400 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span id="mascotMoodText">Mood: Energetic & Ready to Hunt!</span>
+                </div>
+
+                <!-- Roar Gauge (Energy Score) -->
+                <div class="w-full mt-6 space-y-2">
+                    <div class="flex justify-between text-xs font-bold">
+                        <span class="text-gray-400 uppercase tracking-wider">Roar Gauge (Energy)</span>
+                        <span id="roarScoreText" class="text-orange-400">85% 🔥</span>
+                    </div>
+                    <div class="w-full h-3 bg-tiger-bg rounded-full overflow-hidden border border-tiger-border p-0.5">
+                        <div id="roarGaugeBar" class="h-full bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 rounded-full transition-all duration-700 w-[85%]"></div>
+                    </div>
+                </div>
+
+                <!-- Interactive Roar Sound Trigger Button -->
+                <button onclick="triggerMascotRoar()" class="w-full mt-4 py-2.5 rounded-xl bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/40 text-orange-400 font-bold text-xs flex items-center justify-center gap-2 transition active:scale-95">
+                    <i class="fa-solid fa-volume-high"></i>
+                    Test Tiger Roar SFX
+                </button>
+            </div>
+
+            <!-- Territory Map / Habit Tracker -->
+            <div class="glass-card rounded-2xl p-5 space-y-4">
+                <div class="flex items-center justify-between border-b border-tiger-border pb-3">
+                    <h3 class="font-bold font-display text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-map-location-dot text-orange-500"></i>
+                        Territory Control
+                    </h3>
+                    <span class="text-xs text-gray-400">Stalker Streak: <strong class="text-white">7d</strong></span>
+                </div>
+
+                <p class="text-xs text-gray-400">Conquer territories daily by meeting macro targets and logging workouts.</p>
+
+                <!-- Week Territory Tiles -->
+                <div class="grid grid-cols-7 gap-2 text-center" id="territoryGrid">
+                    <!-- Dynamically Generated Days -->
+                </div>
+
+                <!-- Hydration Tracker Quick Bar -->
+                <div class="bg-tiger-bg/60 p-3 rounded-xl border border-tiger-border space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-gray-300 font-semibold"><i class="fa-solid fa-glass-water text-blue-400 mr-1.5"></i> Jungle Hydration</span>
+                        <span id="hydrationStatusText" class="text-blue-400 font-mono">2,000 / 3,000 ml</span>
+                    </div>
+                    <div class="w-full bg-tiger-card h-2 rounded-full overflow-hidden">
+                        <div id="hydrationBar" class="bg-blue-500 h-full transition-all duration-500 w-[66%]"></div>
+                    </div>
+                    <div class="flex gap-2 pt-1">
+                        <button onclick="addHydration(250)" class="flex-1 py-1 rounded bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 text-[11px] font-medium transition border border-blue-500/30">+250ml Glass</button>
+                        <button onclick="addHydration(500)" class="flex-1 py-1 rounded bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 text-[11px] font-medium transition border border-blue-500/30">+500ml Flask</button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT / MAIN COLUMN: Fuel Rings, Prey Log, Workout Hunt (8 Cols) -->
+        <section class="lg:col-span-8 space-y-6">
+
+            <!-- MACRO RING OVERVIEW -->
+            <div class="glass-card rounded-2xl p-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-lg font-black font-display uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-utensils text-orange-500"></i> Daily Prey Fuel Gauge
+                        </h2>
+                        <p class="text-xs text-gray-400">Track target energy, proteins, carbs, and lipids</p>
+                    </div>
+                    <!-- Quick Preset Switcher -->
+                    <div class="flex items-center gap-2 bg-tiger-bg p-1 rounded-xl border border-tiger-border text-xs">
+                        <button onclick="setMacroGoalPreset('cutting')" class="px-3 py-1 rounded-lg text-gray-400 hover:text-white transition" id="presetCutBtn">Lean Hunt</button>
+                        <button onclick="setMacroGoalPreset('bulking')" class="px-3 py-1 rounded-lg bg-orange-500 text-black font-bold transition shadow" id="presetBulkBtn">Apex Bulk</button>
+                        <button onclick="setMacroGoalPreset('maintenance')" class="px-3 py-1 rounded-lg text-gray-400 hover:text-white transition" id="presetMaintBtn">Maintain</button>
+                    </div>
+                </div>
+
+                <!-- Circular Progress Ring & Macro Breakdowns -->
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-6 items-center">
+                    
+                    <!-- SVG Circular Calorie Progress Ring -->
+                    <div class="flex flex-col items-center justify-center relative">
+                        <svg class="w-36 h-36">
+                            <circle class="text-tiger-bg" stroke-width="12" stroke="currentColor" fill="transparent" r="54" cx="72" cy="72"/>
+                            <circle id="calorieProgressCircle" class="text-orange-500 progress-ring__circle" stroke-width="12" stroke-dasharray="339.29" stroke-dashoffset="100" stroke-linecap="round" stroke="currentColor" fill="transparent" r="54" cx="72" cy="72"/>
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                            <span id="caloriesRemainingVal" class="text-2xl font-black font-display text-white">1,450</span>
+                            <span class="text-[10px] uppercase tracking-wider text-gray-400">Kcal Left</span>
+                        </div>
+                    </div>
+
+                    <!-- Individual Macro Bars -->
+                    <div class="sm:col-span-3 grid grid-cols-3 gap-4">
+                        
+                        <!-- Protein (Apex Fuel) -->
+                        <div class="bg-tiger-bg/80 p-3.5 rounded-xl border border-tiger-border space-y-1.5">
+                            <div class="flex justify-between text-xs font-bold">
+                                <span class="text-red-400">PROTEIN</span>
+                                <span id="proteinRatioText" class="text-gray-300">110g / 180g</span>
+                            </div>
+                            <div class="w-full bg-tiger-card h-2 rounded-full overflow-hidden">
+                                <div id="proteinBar" class="bg-gradient-to-r from-red-600 to-orange-500 h-full transition-all duration-500" style="width: 61%;"></div>
+                            </div>
+                            <p id="proteinTierLabel" class="text-[10px] text-orange-400 font-semibold text-right">⚡ Pack Hunter</p>
+                        </div>
+
+                        <!-- Carbs (Agility Fuel) -->
+                        <div class="bg-tiger-bg/80 p-3.5 rounded-xl border border-tiger-border space-y-1.5">
+                            <div class="flex justify-between text-xs font-bold">
+                                <span class="text-amber-400">CARBS</span>
+                                <span id="carbRatioText" class="text-gray-300">140g / 220g</span>
+                            </div>
+                            <div class="w-full bg-tiger-card h-2 rounded-full overflow-hidden">
+                                <div id="carbBar" class="bg-gradient-to-r from-amber-500 to-yellow-400 h-full transition-all duration-500" style="width: 63%;"></div>
+                            </div>
+                            <p class="text-[10px] text-gray-400 text-right">Sprint Ready</p>
+                        </div>
+
+                        <!-- Fats (Endurance Fuel) -->
+                        <div class="bg-tiger-bg/80 p-3.5 rounded-xl border border-tiger-border space-y-1.5">
+                            <div class="flex justify-between text-xs font-bold">
+                                <span class="text-emerald-400">FATS</span>
+                                <span id="fatRatioText" class="text-gray-300">45g / 70g</span>
+                            </div>
+                            <div class="w-full bg-tiger-card h-2 rounded-full overflow-hidden">
+                                <div id="fatBar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full transition-all duration-500" style="width: 64%;"></div>
+                            </div>
+                            <p class="text-[10px] text-gray-400 text-right">Stamina High</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- TABBED INTERFACE: Prey Log vs Hunt & Pounce Workout Log -->
+            <div class="glass-card rounded-2xl p-6">
+                
+                <!-- Tab Navigation Headers -->
+                <div class="flex items-center justify-between border-b border-tiger-border pb-4 mb-6">
+                    <div class="flex gap-4">
+                        <button id="tabPreyBtn" onclick="switchMainTab('prey')" class="pb-2 text-sm font-bold border-b-2 border-orange-500 text-orange-400 flex items-center gap-2">
+                            <i class="fa-solid fa-meat"></i> Prey Log (Nutrition)
+                        </button>
+                        <button id="tabHuntBtn" onclick="switchMainTab('hunt')" class="pb-2 text-sm font-bold border-b-2 border-transparent text-gray-400 hover:text-white flex items-center gap-2">
+                            <i class="fa-solid fa-dumbbell"></i> Hunt & Pounce (Workouts)
+                        </button>
+                    </div>
+
+                    <button onclick="openAddModal()" class="px-3.5 py-1.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-black font-extrabold text-xs transition flex items-center gap-1.5 shadow-md shadow-orange-500/20">
+                        <i class="fa-solid fa-plus"></i> Quick Log
+                    </button>
+                </div>
+
+                <!-- SECTION 1: PREY LOG (MEAL LIST) -->
+                <div id="preyLogSection" class="space-y-4">
+                    <div class="flex items-center justify-between text-xs text-gray-400 px-1">
+                        <span>Logged Prey Items Today</span>
+                        <span id="preyCountBadge">3 Meals Recorded</span>
+                    </div>
+
+                    <!-- Dynamic Meal List Container -->
+                    <div id="preyMealsList" class="space-y-3">
+                        <!-- Items rendered dynamically via JS -->
+                    </div>
+                </div>
+
+                <!-- SECTION 2: HUNT & POUNCE (WORKOUTS) -->
+                <div id="huntLogSection" class="space-y-4 hidden">
+                    <div class="flex items-center justify-between text-xs text-gray-400 px-1">
+                        <span>Completed Hunting Sessions Today</span>
+                        <span id="huntXPBonusText" class="text-amber-400 font-bold">+150 XP Earned Today</span>
+                    </div>
+
+                    <!-- Dynamic Workout List -->
+                    <div id="workoutList" class="space-y-3">
+                        <!-- Items rendered dynamically via JS -->
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="glass-card border-t border-tiger-border py-4 px-6 text-center text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <p>🐾 TigerFuel / RawrFit Health System &copy; 2026. Built for Apex Athletes.</p>
+            <div class="flex gap-4">
+                <span class="hover:text-orange-400 cursor-pointer" onclick="toggleTweakPanel()">Open Feature Tweaker</span>
+                <span class="hover:text-orange-400 cursor-pointer" onclick="triggerMascotRoar()">Roar Audio</span>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- MODAL: ADD MEAL OR WORKOUT -->
+    <div id="addLogModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-card border border-orange-500/30 rounded-2xl max-w-md w-full p-6 space-y-5 animate-scaleUp">
+            
+            <div class="flex justify-between items-center border-b border-tiger-border pb-3">
+                <h3 class="text-base font-bold font-display flex items-center gap-2" id="modalTitle">
+                    <i class="fa-solid fa-drumstick-bite text-orange-500"></i> Log Prey Item
+                </h3>
+                <button onclick="closeAddModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <!-- Type Selector Toggle -->
+            <div class="grid grid-cols-2 gap-2 bg-tiger-bg p-1 rounded-xl border border-tiger-border text-xs font-bold">
+                <button id="modalTypeFood" onclick="setModalType('food')" class="py-2 rounded-lg bg-orange-500 text-black">🍖 Prey (Food)</button>
+                <button id="modalTypeWorkout" onclick="setModalType('workout')" class="py-2 rounded-lg text-gray-400 hover:text-white">🐅 Hunt (Workout)</button>
+            </div>
+
+            <!-- Form Fields for Food -->
+            <form id="logForm" onsubmit="handleLogFormSubmit(event)" class="space-y-4">
+                <div id="foodFields" class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Prey Name / Item</label>
+                        <input type="text" id="foodName" placeholder="e.g. Grilled Bison Steak & Rice" class="w-full bg-tiger-bg border border-tiger-border rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500" required />
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Calories (kcal)</label>
+                            <input type="number" id="foodCals" placeholder="550" class="w-full bg-tiger-bg border border-tiger-border rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500" required />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Protein (g)</label>
+                            <input type="number" id="foodProtein" placeholder="45" class="w-full bg-tiger-bg border border-tiger-border rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500" required />
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Carbs (g)</label>
+                            <input type="number" id="foodCarbs" placeholder="40" class="w-full bg-tiger-bg border border-tiger-border rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Fats (g)</label>
+                            <input type="number" id="foodFats" placeholder="15" class="w-full bg-tiger-bg border border-tiger-border rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Fields for Workout -->
+                <div id="workoutFields" class="space-y-3 hidden">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Hunt Type / Activity</label>
+                        <input type="text" id="workoutName" placeholder="e.g. Apex Deadlift Session or Jungle Sprint" class="w-full bg-tiger-bg border border-tiger-border rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500" />
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Duration (mins)</label>
+                            <input type="number" id="workoutDuration" placeholder="45" class="w-full bg-tiger-bg border border-tiger-border rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-1">Calories Burned</label>
+                            <input type="number" id="workoutCals" placeholder="380" class="w-full bg-tiger-bg border border-tiger-border rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-2 flex gap-3">
+                    <button type="button" onclick="closeAddModal()" class="flex-1 py-2.5 rounded-xl bg-tiger-card hover:bg-tiger-border text-xs font-semibold text-gray-300 border border-tiger-border">Cancel</button>
+                    <button type="submit" class="flex-1 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-black font-extrabold text-xs shadow-lg shadow-orange-500/20">Log Entry 🐾</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+    <!-- FEATURE TWEAKER / INTERACTIVE CODE PLAYGROUND PANEL -->
+    <div id="tweakPanel" class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-tiger-card border-l border-tiger-border z-50 p-6 shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300 overflow-y-auto">
+        <div class="space-y-6">
+            <div class="flex justify-between items-center border-b border-tiger-border pb-4">
+                <div>
+                    <h2 class="font-bold font-display text-base flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-orange-500"></i> Feature Tweak & Code Panel
+                    </h2>
+                    <p class="text-xs text-gray-400">Tweak app logic, themes & parameters live!</p>
+                </div>
+                <button onclick="toggleTweakPanel()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+
+            <!-- Theme Switcher -->
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-gray-300 uppercase tracking-wider block">Tiger Breed Theme Accent</label>
+                <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+                    <button onclick="setAppTheme('bengal')" class="p-2.5 rounded-xl bg-tiger-bg border border-orange-500/50 text-orange-400 flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-orange-500"></span> Bengal Orange
+                    </button>
+                    <button onclick="setAppTheme('white')" class="p-2.5 rounded-xl bg-tiger-bg border border-tiger-border text-slate-300 flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-slate-300"></span> White Tiger Silver
+                    </button>
+                    <button onclick="setAppTheme('golden')" class="p-2.5 rounded-xl bg-tiger-bg border border-tiger-border text-amber-400 flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-amber-400"></span> Golden Tabby
+                    </button>
+                    <button onclick="setAppTheme('shadow')" class="p-2.5 rounded-xl bg-tiger-bg border border-tiger-border text-purple-400 flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-purple-500"></span> Shadow Panther
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mascot Mood Threshold Tweak Slider -->
+            <div class="space-y-2 bg-tiger-bg p-4 rounded-xl border border-tiger-border">
+                <div class="flex justify-between text-xs font-bold">
+                    <label class="text-gray-300">Apex Mood Threshold (% Protein)</label>
+                    <span id="apexThresholdVal" class="text-orange-400 font-mono">120g</span>
+                </div>
+                <input type="range" id="apexThresholdSlider" min="80" max="250" value="120" oninput="updateApexThreshold(this.value)" class="w-full accent-orange-500 cursor-pointer" />
+                <p class="text-[10px] text-gray-500">Adjust the protein target needed to activate Apex Predator mood.</p>
+            </div>
+
+            <!-- Audio & Roar SFX Settings -->
+            <div class="space-y-3 bg-tiger-bg p-4 rounded-xl border border-tiger-border">
+                <label class="text-xs font-bold text-gray-300 uppercase tracking-wider block">Interactive Audio Logic</label>
+                <div class="flex items-center justify-between text-xs">
+                    <span class="text-gray-300">Synthesized Tiger Roar SFX</span>
+                    <input type="checkbox" id="roarSfxToggle" checked class="w-4 h-4 accent-orange-500 cursor-pointer" />
+                </div>
+                <div class="flex items-center justify-between text-xs pt-1">
+                    <span class="text-gray-300">Pounce / Meal Logging FX</span>
+                    <input type="checkbox" id="pounceSfxToggle" checked class="w-4 h-4 accent-orange-500 cursor-pointer" />
+                </div>
+            </div>
+
+            <!-- Mascot Accessories Unlock Switcher -->
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-gray-300 uppercase tracking-wider block">Mascot Gear / Hat</label>
+                <select id="mascotHatSelect" onchange="changeMascotHat(this.value)" class="w-full bg-tiger-bg border border-tiger-border text-white text-xs rounded-xl p-2.5 focus:outline-none focus:border-orange-500">
+                    <option value="👑">Royal Crown (Apex Level 5)</option>
+                    <option value="🧢">Hunter Cap</option>
+                    <option value="🕶️">Predator Sunglasses</option>
+                    <option value="🎧">Jungle Headphones</option>
+                    <option value="none">None (Wild Natural)</option>
+                </select>
+            </div>
+
+            <!-- Code Logic Modifier Block -->
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-gray-300 uppercase tracking-wider block">XP Calculation Multiplier (Code Logic)</label>
+                <div class="bg-tiger-bg p-3 rounded-xl border border-tiger-border font-mono text-xs text-orange-400 space-y-2">
+                    <div class="text-gray-400">// Code Snippet Applied Live</div>
+                    <div>XP_PER_WORKOUT_MIN = <span id="xpMultiplierCodeDisplay">5</span>;</div>
+                    <div class="flex items-center gap-2 pt-2">
+                        <button onclick="setXPMultiplier(3)" class="px-2 py-1 rounded bg-tiger-card text-gray-300 hover:text-white border border-tiger-border">3x Standard</button>
+                        <button onclick="setXPMultiplier(5)" class="px-2 py-1 rounded bg-orange-500/20 text-orange-400 border border-orange-500/40 font-bold">5x Beast Mode</button>
+                        <button onclick="setXPMultiplier(10)" class="px-2 py-1 rounded bg-tiger-card text-gray-300 hover:text-white border border-tiger-border">10x Frenzy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-6 border-t border-tiger-border">
+            <button onclick="resetAppDefaults()" class="w-full py-2.5 rounded-xl bg-red-950/40 hover:bg-red-900/60 text-red-400 border border-red-800/40 font-bold text-xs transition">
+                Reset All App Data to Default
+            </button>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        // ==========================================
+        // APP STATE & INITIAL DATA
+        // ==========================================
+        let appState = {
+            streakDays: 7,
+            xp: 1420,
+            hydration: 2000,
+            hydrationTarget: 3000,
+            
+            // Daily Macro Targets
+            targets: {
+                calories: 2600,
+                protein: 180,
+                carbs: 220,
+                fat: 70
+            },
+
+            // Logged Data
+            preyLogs: [
+                { id: 1, name: "Wild Salmon & Sweet Potato", cals: 620, protein: 52, carbs: 48, fat: 18, time: "8:30 AM" },
+                { id: 2, name: "Whey Protein & Banana Jungle Shake", cals: 340, protein: 40, carbs: 30, fat: 4, time: "12:15 PM" },
+                { id: 3, name: "Lean Turkey Breast & Avocado", cals: 490, protein: 48, carbs: 12, fat: 22, time: "3:45 PM" }
+            ],
+
+            workoutLogs: [
+                { id: 101, name: "Apex Deadlift & Heavy Squats", duration: 50, cals: 420, xp: 250, icon: "fa-dumbbell", time: "7:00 AM" },
+                { id: 102, name: "Jungle Sprint Intervals", duration: 25, cals: 280, xp: 125, icon: "fa-person-running", time: "2:00 PM" }
+            ],
+
+            // Feature Tweaker Settings
+            xpMultiplier: 5,
+            apexProteinThreshold: 120,
+            currentTheme: 'bengal',
+            audioEnabled: true
+        };
+
+        let currentModalType = 'food';
+
+        // Initialize App on DOM Load
+        window.onload = function() {
+            renderTerritoryGrid();
+            renderPreyLogs();
+            renderWorkoutLogs();
+            updateAllCalculations();
+            setupEventListeners();
+        };
+
+        // ==========================================
+        // MACRO & ENERGY COMPUTATION LOGIC
+        // ==========================================
+        function updateAllCalculations() {
+            // Sum Macros
+            const totalCals = appState.preyLogs.reduce((sum, item) => sum + item.cals, 0);
+            const totalProtein = appState.preyLogs.reduce((sum, item) => sum + item.protein, 0);
+            const totalCarbs = appState.preyLogs.reduce((sum, item) => sum + item.carbs, 0);
+            const totalFat = appState.preyLogs.reduce((sum, item) => sum + item.fat, 0);
+
+            // Workout Burn Adjustment
+            const workoutCalsBurned = appState.workoutLogs.reduce((sum, w) => sum + w.cals, 0);
+
+            // Calorie Calculation
+            const remainingCals = Math.max(0, (appState.targets.calories + workoutCalsBurned) - totalCals);
+            document.getElementById('caloriesRemainingVal').innerText = remainingCals.toLocaleString();
+
+            // Calorie Ring SVG Offset Animation (Max 339.29 px)
+            const calPct = Math.min(100, (totalCals / (appState.targets.calories + workoutCalsBurned)) * 100);
+            const strokeOffset = 339.29 - (339.29 * calPct / 100);
+            document.getElementById('calorieProgressCircle').style.strokeDashoffset = strokeOffset;
+
+            // Update Macro Bar Percentages & Text
+            updateMacroBar('protein', totalProtein, appState.targets.protein, 'proteinRatioText', 'proteinBar');
+            updateMacroBar('carb', totalCarbs, appState.targets.carbs, 'carbRatioText', 'carbBar');
+            updateMacroBar('fat', totalFat, appState.targets.fat, 'fatRatioText', 'fatBar');
+
+            // Tiger Tier Label based on Protein Intake
+            const pTierLabel = document.getElementById('proteinTierLabel');
+            if (totalProtein >= appState.apexProteinThreshold) {
+                pTierLabel.innerText = "👑 Apex Predator Tier";
+                pTierLabel.className = "text-[10px] text-amber-400 font-bold text-right";
+            } else if (totalProtein >= appState.apexProteinThreshold * 0.6) {
+                pTierLabel.innerText = "⚡ Pack Hunter Tier";
+                pTierLabel.className = "text-[10px] text-orange-400 font-semibold text-right";
+            } else {
+                pTierLabel.innerText = "🐾 Cub Snack Tier";
+                pTierLabel.className = "text-[10px] text-gray-400 text-right";
+            }
+
+            // Hydration UI Update
+            document.getElementById('hydrationStatusText').innerText = `${appState.hydration.toLocaleString()} / ${appState.hydrationTarget.toLocaleString()} ml`;
+            const hydPct = Math.min(100, (appState.hydration / appState.hydrationTarget) * 100);
+            document.getElementById('hydrationBar').style.width = `${hydPct}%`;
+
+            // Roar Score & Mascot Expression Update
+            computeRoarScoreAndMood(totalProtein, calPct, hydPct);
+        }
+
+        function updateMacroBar(type, current, target, textElemId, barElemId) {
+            const ratioText = document.getElementById(textElemId);
+            const bar = document.getElementById(barElemId);
+            ratioText.innerText = `${current}g / ${target}g`;
+            const pct = Math.min(100, (current / target) * 100);
+            bar.style.width = `${pct}%`;
+        }
+
+        // Compute Dynamic Roar Score (Energy Meter) & Update Mascot Reactions
+        function computeRoarScoreAndMood(protein, calPct, hydPct) {
+            // Weighted formula: Protein (40%), Hydration (30%), Calorie Balance (30%)
+            const proteinPct = Math.min(100, (protein / appState.targets.protein) * 100);
+            const roarScore = Math.round((proteinPct * 0.4) + (hydPct * 0.3) + (calPct * 0.3));
+
+            document.getElementById('roarScoreText').innerText = `${roarScore}% 🔥`;
+            document.getElementById('roarGaugeBar').style.width = `${roarScore}%`;
+
+            // Mascot SVG Eye & Mouth State Animation
+            const mouthPath = document.getElementById('tigerMouth');
+            const moodText = document.getElementById('mascotMoodText');
+
+            if (roarScore >= 80) {
+                moodText.innerText = "Mood: Apex Predator! Dynamic Roar Unleashed!";
+                mouthPath.setAttribute('d', 'M 80 135 Q 100 155 120 135'); // Big Smile / Roar Mouth
+            } else if (roarScore >= 50) {
+                moodText.innerText = "Mood: Ready to Hunt & Stalk Prey";
+                mouthPath.setAttribute('d', 'M 85 138 Q 100 145 115 138'); // Neutral Smile
+            } else {
+                moodText.innerText = "Mood: Low Energy - Needs Protein & Hydration!";
+                mouthPath.setAttribute('d', 'M 85 142 Q 100 135 115 142'); // Frown/Hungry
+            }
+        }
+
+        // ==========================================
+        // PREY LOG & WORKOUT RENDERING
+        // ==========================================
+        function renderPreyLogs() {
+            const container = document.getElementById('preyMealsList');
+            container.innerHTML = '';
+
+            appState.preyLogs.forEach(meal => {
+                let tierBadge = "Cub Snack";
+                let badgeClass = "bg-gray-800 text-gray-300";
+
+                if (meal.protein >= 45) {
+                    tierBadge = "⚡ Apex Fuel";
+                    badgeClass = "bg-orange-500/20 text-orange-400 border border-orange-500/30";
+                } else if (meal.protein >= 25) {
+                    tierBadge = "🐾 Pack Fuel";
+                    badgeClass = "bg-amber-500/20 text-amber-400 border border-amber-500/30";
+                }
+
+                const item = document.createElement('div');
+                item.className = "bg-tiger-bg p-4 rounded-xl border border-tiger-border flex items-center justify-between hover:border-orange-500/40 transition";
+                item.innerHTML = `
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-400 font-bold">
+                            <i class="fa-solid fa-bone"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h4 class="font-bold text-sm text-white">${meal.name}</h4>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${badgeClass}">${tierBadge}</span>
+                            </div>
+                            <p class="text-xs text-gray-400">P: <strong class="text-white">${meal.protein}g</strong> | C: ${meal.carbs}g | F: ${meal.fat}g • ${meal.time}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="font-black text-sm text-orange-400 font-mono">+${meal.cals} kcal</span>
+                        <button onclick="deletePreyItem(${meal.id})" class="text-gray-500 hover:text-red-400 text-xs p-1"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+
+            document.getElementById('preyCountBadge').innerText = `${appState.preyLogs.length} Meals Logged`;
+        }
+
+        function renderWorkoutLogs() {
+            const container = document.getElementById('workoutList');
+            container.innerHTML = '';
+
+            appState.workoutLogs.forEach(w => {
+                const item = document.createElement('div');
+                item.className = "bg-tiger-bg p-4 rounded-xl border border-tiger-border flex items-center justify-between hover:border-orange-500/40 transition";
+                item.innerHTML = `
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold">
+                            <i class="fa-solid ${w.icon || 'fa-dumbbell'}"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white">${w.name}</h4>
+                            <p class="text-xs text-gray-400">${w.duration} mins • ${w.time}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-right">
+                            <span class="block text-xs font-bold text-orange-400 font-mono">-${w.cals} kcal</span>
+                            <span class="text-[10px] text-amber-400 font-bold">+${w.xp} XP</span>
+                        </div>
+                        <button onclick="deleteWorkoutItem(${w.id})" class="text-gray-500 hover:text-red-400 text-xs p-1"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function deletePreyItem(id) {
+            appState.preyLogs = appState.preyLogs.filter(item => item.id !== id);
+            renderPreyLogs();
+            updateAllCalculations();
+        }
+
+        function deleteWorkoutItem(id) {
+            appState.workoutLogs = appState.workoutLogs.filter(w => w.id !== id);
+            renderWorkoutLogs();
+            updateAllCalculations();
+        }
+
+        // ==========================================
+        // HYDRATION & STREAK ACTIONS
+        // ==========================================
+        function addHydration(amount) {
+            appState.hydration += amount;
+            playAudioSFX('water');
+            updateAllCalculations();
+        }
+
+        function quickAddWater() {
+            addHydration(250);
+        }
+
+        function renderTerritoryGrid() {
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            const grid = document.getElementById('territoryGrid');
+            grid.innerHTML = '';
+
+            days.forEach((day, idx) => {
+                const isConquered = idx < 5; // First 5 days conquered
+                const isToday = idx === 4;
+
+                const tile = document.createElement('div');
+                tile.className = `p-2 rounded-xl text-xs flex flex-col items-center justify-center gap-1 border transition ${
+                    isConquered 
+                    ? 'bg-orange-500/15 border-orange-500/40 text-orange-400' 
+                    : 'bg-tiger-bg border-tiger-border text-gray-500'
+                } ${isToday ? 'ring-2 ring-orange-500' : ''}`;
+
+                tile.innerHTML = `
+                    <span class="text-[10px] font-bold uppercase">${day}</span>
+                    <i class="fa-solid ${isConquered ? 'fa-paw' : 'fa-lock'} text-sm"></i>
+                `;
+                grid.appendChild(tile);
+            });
+        }
+
+        // ==========================================
+        // USER INTERACTION: ADD LOG MODAL
+        // ==========================================
+        function openAddModal() {
+            document.getElementById('addLogModal').classList.remove('hidden');
+        }
+
+        function closeAddModal() {
+            document.getElementById('addLogModal').classList.add('hidden');
+        }
+
+        function setModalType(type) {
+            currentModalType = type;
+            const foodBtn = document.getElementById('modalTypeFood');
+            const workoutBtn = document.getElementById('modalTypeWorkout');
+            const foodFields = document.getElementById('foodFields');
+            const workoutFields = document.getElementById('workoutFields');
+            const modalTitle = document.getElementById('modalTitle');
+
+            if (type === 'food') {
+                foodBtn.className = "py-2 rounded-lg bg-orange-500 text-black";
+                workoutBtn.className = "py-2 rounded-lg text-gray-400 hover:text-white";
+                foodFields.classList.remove('hidden');
+                workoutFields.classList.add('hidden');
+                modalTitle.innerHTML = `<i class="fa-solid fa-drumstick-bite text-orange-500"></i> Log Prey Item`;
+            } else {
+                workoutBtn.className = "py-2 rounded-lg bg-orange-500 text-black";
+                foodBtn.className = "py-2 rounded-lg text-gray-400 hover:text-white";
+                foodFields.classList.add('hidden');
+                workoutFields.classList.remove('hidden');
+                modalTitle.innerHTML = `<i class="fa-solid fa-dumbbell text-orange-500"></i> Log Hunt Workout`;
+            }
+        }
+
+        function handleLogFormSubmit(e) {
+            e.preventDefault();
+
+            if (currentModalType === 'food') {
+                const name = document.getElementById('foodName').value;
+                const cals = parseInt(document.getElementById('foodCals').value) || 0;
+                const protein = parseInt(document.getElementById('foodProtein').value) || 0;
+                const carbs = parseInt(document.getElementById('foodCarbs').value) || 0;
+                const fat = parseInt(document.getElementById('foodFats').value) || 0;
+
+                const newMeal = {
+                    id: Date.now(),
+                    name: name,
+                    cals: cals,
+                    protein: protein,
+                    carbs: carbs,
+                    fat: fat,
+                    time: "Just Now"
+                };
+
+                appState.preyLogs.unshift(newMeal);
+                renderPreyLogs();
+                playAudioSFX('pounce');
+            } else {
+                const name = document.getElementById('workoutName').value || "Jungle Hunt";
+                const duration = parseInt(document.getElementById('workoutDuration').value) || 30;
+                const cals = parseInt(document.getElementById('workoutCals').value) || 200;
+                
+                // Live XP Multiplier Calculation from Feature Tweaker Code Logic!
+                const calculatedXP = duration * appState.xpMultiplier;
+
+                const newWorkout = {
+                    id: Date.now(),
+                    name: name,
+                    duration: duration,
+                    cals: cals,
+                    xp: calculatedXP,
+                    icon: "fa-person-running",
+                    time: "Just Now"
+                };
+
+                appState.workoutLogs.unshift(newWorkout);
+                appState.xp += calculatedXP;
+                document.getElementById('headerXPVal').innerText = `${appState.xp.toLocaleString()} XP`;
+                renderWorkoutLogs();
+                playAudioSFX('roar');
+            }
+
+            updateAllCalculations();
+            closeAddModal();
+            
+            // Reset fields
+            document.getElementById('logForm').reset();
+        }
+
+        function switchMainTab(tab) {
+            const preyBtn = document.getElementById('tabPreyBtn');
+            const huntBtn = document.getElementById('tabHuntBtn');
+            const preySec = document.getElementById('preyLogSection');
+            const huntSec = document.getElementById('huntLogSection');
+
+            if (tab === 'prey') {
+                preyBtn.className = "pb-2 text-sm font-bold border-b-2 border-orange-500 text-orange-400 flex items-center gap-2";
+                huntBtn.className = "pb-2 text-sm font-bold border-b-2 border-transparent text-gray-400 hover:text-white flex items-center gap-2";
+                preySec.classList.remove('hidden');
+                huntSec.classList.add('hidden');
+            } else {
+                huntBtn.className = "pb-2 text-sm font-bold border-b-2 border-orange-500 text-orange-400 flex items-center gap-2";
+                preyBtn.className = "pb-2 text-sm font-bold border-b-2 border-transparent text-gray-400 hover:text-white flex items-center gap-2";
+                huntSec.classList.remove('hidden');
+                preySec.classList.add('hidden');
+            }
+        }
+
+        function setMacroGoalPreset(preset) {
+            document.getElementById('presetCutBtn').className = "px-3 py-1 rounded-lg text-gray-400 hover:text-white transition";
+            document.getElementById('presetBulkBtn').className = "px-3 py-1 rounded-lg text-gray-400 hover:text-white transition";
+            document.getElementById('presetMaintBtn').className = "px-3 py-1 rounded-lg text-gray-400 hover:text-white transition";
+
+            if (preset === 'cutting') {
+                appState.targets = { calories: 2000, protein: 190, carbs: 150, fat: 55 };
+                document.getElementById('presetCutBtn').className = "px-3 py-1 rounded-lg bg-orange-500 text-black font-bold transition shadow";
+            } else if (preset === 'bulking') {
+                appState.targets = { calories: 2900, protein: 200, carbs: 320, fat: 80 };
+                document.getElementById('presetBulkBtn').className = "px-3 py-1 rounded-lg bg-orange-500 text-black font-bold transition shadow";
+            } else {
+                appState.targets = { calories: 2400, protein: 160, carbs: 240, fat: 70 };
+                document.getElementById('presetMaintBtn').className = "px-3 py-1 rounded-lg bg-orange-500 text-black font-bold transition shadow";
+            }
+
+            updateAllCalculations();
+        }
+
+        // ==========================================
+        // FEATURE TWEAKER / CODE PLAYGROUND LOGIC
+        // ==========================================
+        function toggleTweakPanel() {
+            const panel = document.getElementById('tweakPanel');
+            panel.classList.toggle('translate-x-full');
+        }
+
+        function setAppTheme(theme) {
+            appState.currentTheme = theme;
+            document.body.classList.remove('theme-white-tiger', 'theme-golden-tabby', 'theme-shadow-panther');
+
+            if (theme === 'white') {
+                document.body.classList.add('theme-white-tiger');
+            } else if (theme === 'golden') {
+                document.body.classList.add('theme-golden-tabby');
+            } else if (theme === 'shadow') {
+                document.body.classList.add('theme-shadow-panther');
+            }
+        }
+
+        function updateApexThreshold(val) {
+            appState.apexProteinThreshold = parseInt(val);
+            document.getElementById('apexThresholdVal').innerText = `${val}g`;
+            updateAllCalculations();
+        }
+
+        function setXPMultiplier(mult) {
+            appState.xpMultiplier = mult;
+            document.getElementById('xpMultiplierCodeDisplay').innerText = mult;
+        }
+
+        function changeMascotHat(emoji) {
+            const slot = document.getElementById('mascotAccessorySlot');
+            if (emoji === 'none') {
+                slot.innerText = '';
+            } else {
+                slot.innerText = emoji;
+            }
+        }
+
+        function resetAppDefaults() {
+            appState.hydration = 2000;
+            appState.preyLogs = [
+                { id: 1, name: "Wild Salmon & Sweet Potato", cals: 620, protein: 52, carbs: 48, fat: 18, time: "8:30 AM" }
+            ];
+            renderPreyLogs();
+            renderWorkoutLogs();
+            updateAllCalculations();
+            toggleTweakPanel();
+        }
+
+        // ==========================================
+        // SYNTHESIZED WEB AUDIO SFX (ROAR & EFFECTS)
+        // ==========================================
+        function triggerMascotRoar() {
+            // Visual pulse effect on mascot box
+            const avatar = document.getElementById('mascotAvatarContainer');
+            avatar.classList.add('animate-roar');
+            setTimeout(() => avatar.classList.remove('animate-roar'), 800);
+
+            playAudioSFX('roar');
+        }
+
+        function playAudioSFX(type) {
+            if (!document.getElementById('roarSfxToggle').checked) return;
+
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                const ctx = new AudioCtx();
+
+                if (type === 'roar') {
+                    // Synthesize low tiger roar growl using oscillator & noise
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(110, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(45, ctx.currentTime + 0.6);
+
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.7);
+
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.7);
+                } else if (type === 'pounce') {
+                    // Quick energetic pop sound
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(300, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.15);
+                } else if (type === 'water') {
+                    // Water drop pitch chime
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(500, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(900, ctx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.1);
+                }
+            } catch (err) {
+                console.log("Web Audio API initialized on user gesture.");
+            }
+        }
+
+        function setupEventListeners() {
+            // Close modal on escape key
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeAddModal();
+            });
+        }
+    </script>
+</body>
+</html>
